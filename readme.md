@@ -1,4 +1,16 @@
-### Weakaura HUD
+## How to Download
+
+Click here:
+
+![Step1](https://codeberg.org/flak/css1/raw/branch/main/Images/mods/how%20to%20download%20from%20codeberg%201.png)
+
+Then click here:
+
+![Step2](https://codeberg.org/flak/css1/raw/branch/main/Images/mods/how%20to%20download%20from%20codeberg%202.png)
+
+## Mod Versions Info
+
+#### Weakaura HUD:
 Just use the default one, and if u want these options, then pick the file with those tags.
 * **Low**:    Lowered as much as it can be.
 * **QWERDF**: Abilities are in QWER-DF order, vs how i liked it, D-QWER-F.
@@ -6,15 +18,15 @@ Just use the default one, and if u want these options, then pick the file with t
 * **C**:      Tooltips are centered above the ability icons. (This is how it is by default.)
 * **TT**:     Tooltips are **enabled.** (Required to ping spell CDs).
 
-### Old HP
+#### Old HP:
 * **ALT**:     Jungle HP bars are the bigger version with health value text.
 * **Default**: Jungle HP bars are what they actually were, small & without health value text.
 
-### No FF
+#### No FF:
 * **C**:  By default, the ability to swap back to All chat after enabling Party chat is disabled, this re-enables that.
 * **H**:  Top right header unmodified.
 * **CH**: Both previous.
 * **FF**: No automatic no vote, just hides the popup.
 
-### NoSkin
+#### NoSkin:
 * **Classic-Whitelisted**: Classic skins, ie the *old* skins are *not* noskinned.
