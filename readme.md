@@ -3,7 +3,7 @@ Just use the default one, and if u want these options, then pick the file with t
 * Low:    Lowered as much as it can be.
 * QWERDF: Abilities are in QWER-DF order, vs how i liked it, D-QWER-F.
 * I:      Items are **NOT** attached to the HUD.
-* C:      Tooltips are centered above the ability icons.
+* C:      Tooltips are centered above the ability icons. (This is how it is by default.)
 * TT:     Tooltips are **enabled** (required to ping spell CDs).
 
 ### Old HP
