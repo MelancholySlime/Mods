@@ -1,0 +1,82 @@
+name: Mirror Codeberg Repository
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Every Sunday at 00:00 UTC (07:00 Vietnam time)
+    - cron: "0 0 * * 0"
+
+permissions:
+  contents: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Get the current GitHub repository so we can preserve
+      # GitHub-only files.
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Save GitHub-only files before replacing the repository
+      - name: Save GitHub-only files
+        run: |
+          mkdir -p /tmp/github-preserve
+
+          if [ -f README.md ]; then
+            cp README.md /tmp/github-preserve/README.md
+          fi
+
+          if [ -f .github/workflows/mirror.yml ]; then
+            mkdir -p /tmp/github-preserve/.github/workflows
+            cp .github/workflows/mirror.yml \
+              /tmp/github-preserve/.github/workflows/mirror.yml
+          fi
+
+      # Clone the Codeberg repository
+      - name: Clone Codeberg repository
+        run: |
+          rm -rf repo
+          git clone https://codeberg.org/flak/Mods.git repo
+
+      # Restore files that belong to the GitHub mirror
+      - name: Restore GitHub-only files
+        run: |
+          if [ -f /tmp/github-preserve/README.md ]; then
+            cp /tmp/github-preserve/README.md repo/README.md
+          fi
+
+          if [ -f /tmp/github-preserve/.github/workflows/mirror.yml ]; then
+            mkdir -p repo/.github/workflows
+            cp /tmp/github-preserve/.github/workflows/mirror.yml \
+              repo/.github/workflows/mirror.yml
+          fi
+
+      # Commit preserved GitHub-only files if they differ
+      - name: Commit preserved files
+        working-directory: repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add README.md .github/workflows/mirror.yml
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Preserve GitHub mirror files"
+          fi
+
+      # Replace GitHub main with the updated Codeberg mirror
+      - name: Push to GitHub
+        working-directory: repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git remote remove origin
+          git remote add origin \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
+
+          git push --force origin main
